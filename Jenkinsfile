@@ -10,10 +10,7 @@ node {
 	//archive 'target/*.jar'
  }
  stage('Deploy') {
-		withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS_NEW_Credentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-    
-    ansiblePlaybook credentialsId: 'ssh-credentials', installation: 'ansible-installation', playbook: 'deploy.yaml', sudoUser: null
-   } 
+     ansiblePlaybook credentialsId: 'ssh-credentials', installation: 'ansible-installation', playbook: 'deploy.yaml', sudoUser: null
   }
 }	
  
