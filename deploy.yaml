@@ -4,8 +4,8 @@
 
   vars:
      region: us-east-1
-     instance_type: t2.micro
-     base_image_name: ami-8c1be5f6
+     instance_type: t2.nano
+     base_image_name: ami-0d5eff06f840b45e9
      number_of_instances_to_create: 1
 
   tasks:
@@ -37,7 +37,7 @@
 
     - name: Start up an EC2 Temporary Instance
       ec2:
-        key_name: microservices_course_key
+        key_name: kops-microservices-demo
         group: jenkins_server_security_groups
         instance_type: "{{ instance_type }}"
         image: "{{ base_image_name }}"
