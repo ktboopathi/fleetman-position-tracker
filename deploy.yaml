@@ -112,14 +112,14 @@
 
 - hosts: localhost
   tasks:
-  - name: Gather facts about the new blue server
-    ec2_instance_facts:
+   - name: Gather facts about the new blue server
+     ec2_instance_facts:
        filters:
           "tag:Deploy": Blue
           "tag:Name": Position_Tracker
           instance-state-name: running
        region: "{{ region }}"
-    register: new_server
+     register: new_server
     
    - name: output the new_server variable
      debug: msg="new_server ip is {{ new_server }}" 
@@ -127,17 +127,17 @@
    - name: output the new_server instances variable 
      debug: msg="new_server ip is {{ new_server.instances[0].instance_id }}"     
 
-  - name: Get the id of the old, soon to be dead, green server
-    ec2_instance_facts:
+   - name: Get the id of the old, soon to be dead, green server
+     ec2_instance_facts:
        filters:
           "tag:Deploy": Green
           "tag:Name": Position_Tracker
           instance-state-name: running
        region: "{{ region }}"
-    register: old_green
+     register: old_green
 
-  - name: Terminate the existing Green Server.
-    ec2:
+   - name: Terminate the existing Green Server.
+     ec2:
       exact_count: 0
       count_tag:
         Name: Position_Tracker
@@ -145,16 +145,16 @@
       region: "{{ region }}"
       image: notneeded
 
-  - name: All done, set new server to Green status
-    ec2_tag:
+   - name: All done, set new server to Green status
+     ec2_tag:
        region: "{{ region }}"
        resource: "{{ new_server.instances[0].instance_id }}"
        tags:
           Deploy: Green
        state: present
 
-  - name: Remove Blue Tag
-    ec2_tag:
+   - name: Remove Blue Tag
+     ec2_tag:
        region: "{{ region }}"
        resource: "{{ new_server.instances[0].instance_id }}"
        tags:
